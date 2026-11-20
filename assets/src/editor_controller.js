@@ -17,11 +17,13 @@ import {
     atStart,
     caretRect,
     deleteBefore,
+    fieldHtml,
     insertHtml,
     insertLineBreak,
     onEdgeLine,
     placeCaret,
     rangeIn,
+    settleStoredMarks,
     splitAtCaret,
     textBefore,
     toggleMark,
@@ -335,7 +337,7 @@ export default class extends Controller {
 
     /** The inline HTML of a rich field, cleaned. */
     html(field) {
-        return sanitize(field.innerHTML, this.marks).replace(/(?:<br>)+$/, '');
+        return sanitize(fieldHtml(field), this.marks).replace(/(?:<br>)+$/, '');
     }
 
     /** Writes what a field shows into the block's data. */
@@ -379,6 +381,10 @@ export default class extends Controller {
         this.lastInput = Date.now();
         const field = at.field;
 
+        if (field.isContentEditable) {
+            settleStoredMarks(field);
+        }
+
         if (
             field.isContentEditable &&
             isBlank(field.innerHTML) &&
@@ -403,7 +409,7 @@ export default class extends Controller {
 
     /** Turns a paragraph into another block as its Markdown-like mark is typed. */
     formatAsTyped(block, field) {
-        const format = atEnd(field) ? autoformat(textOf(field.innerHTML)) : null;
+        const format = atEnd(field) ? autoformat(textOf(fieldHtml(field))) : null;
 
         if (null === format || !this.tools.includes(format.type)) {
             return false;
@@ -861,7 +867,7 @@ export default class extends Controller {
         const path = field.dataset.itemField.split('.').map(Number);
         const data = block.data;
 
-        if (isBlank(field.innerHTML) && 0 === itemAt(data.items, path).items.length) {
+        if (isBlank(fieldHtml(field)) && 0 === itemAt(data.items, path).items.length) {
             if (path.length > 1) {
                 this.indent(at, field, true);
 
@@ -922,7 +928,7 @@ export default class extends Controller {
 
             const flat = flatItems(block.data.items);
 
-            if (1 === flat.length || (0 === path[0] && isBlank(field.innerHTML))) {
+            if (1 === flat.length || (0 === path[0] && isBlank(fieldHtml(field)))) {
                 this.turnInto(block, { type: 'paragraph', options: {} });
 
                 return true;

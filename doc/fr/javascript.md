@@ -1,4 +1,4 @@
-<!-- phil-dev source-sha256=d602178df8f2cd71ec03b0f2ef67098622797d5f3f5a2cef3e987e79d352cd1a -->
+<!-- phil-dev source-sha256=946d08e6e53669884c683c69ee47ae6d45313795b7e6167b3e91eecc288f8969 -->
 # JavaScript
 
 ## Le contrôleur
@@ -66,7 +66,8 @@ Le document est écrit dans le champ après `apply` et `remove`, hors du mode le
 Les libellés sont en anglais et en français dans `assets/src/lib/i18n.js`. Une locale comme `fr_CA` prend le français,
 une locale inconnue l'anglais. Tout libellé peut être remplacé par l'option `messages` du champ ou par la clé
 `messages`, selon sa clé — `placeholder`, `delete`, `turnInto`, `color.accent` et les autres du fichier. `{type}` dans
-`foreign` et `converted` est remplacé par le type.
+`foreign` et `converted` est remplacé par le type, `{row}` et `{column}` dans `cell`, le nom accessible d'une cellule
+de tableau, par sa position.
 
 ## Modules
 

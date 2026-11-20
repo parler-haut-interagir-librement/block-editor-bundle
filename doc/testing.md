@@ -48,6 +48,19 @@ columns and a block of another type. Each check below states what to do and what
 | Saving | Submit the form | The input holds the document without empty blocks |
 | Writing together | With `phil/edit-lock-bundle`, two writers on one page; one types in a paragraph, then adds one | The other sees the paragraph closed with the writer's name, its text changing, the new paragraph inserted after it, the caret of their own block untouched |
 
+## Measures in a browser
+
+`tests/Browser/measure.mjs`, kept from the archived [ProseMirror trial](prosemirror-trial.md), drives a headless
+Chrome over the DevTools protocol through 28 scenarios — typing, marks by shortcut on a selection and at the caret,
+Enter and Backspace across blocks, undo, IME composition, dead keys, paste — and prints a JSON report with the
+accessibility node of a field, the bytes served and the drawing times. It needs Node, PHP and Chrome, and the
+Stimulus module of `tests/Browser/package.json`:
+
+```bash
+npm ci --ignore-scripts --prefix packages/block-editor-bundle/tests/Browser
+node packages/block-editor-bundle/tests/Browser/measure.mjs --chrome=/path/to/chrome
+```
+
 ## Testing a form that holds a document
 
 Submit the JSON the editor would write, and assert on the canonical form:

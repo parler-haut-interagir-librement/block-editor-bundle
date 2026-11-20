@@ -64,7 +64,8 @@ The document is written to the input after `apply` and `remove`, outside read-on
 The labels are in English and French in `assets/src/lib/i18n.js`; a locale such as `fr_CA` takes French, an unknown
 one English. Any label can be replaced through the field's `messages` option or the `messages` key, by its key —
 `placeholder`, `delete`, `turnInto`, `color.accent`, and the others of the file. `{type}` in `foreign` and
-`converted` is replaced by the type.
+`converted` is replaced by the type, `{row}` and `{column}` in `cell`, the accessible name of a table cell, by its
+position.
 
 ## Modules
 
